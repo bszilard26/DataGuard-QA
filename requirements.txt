@@ -1,0 +1,6 @@
+selenium
+requests
+pytest
+sqlalchemy
+allure-pytest
+webdriver-manager
