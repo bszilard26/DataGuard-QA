@@ -1,16 +1,17 @@
-from selenium.webdriver.common.by import By
+# pages/login_page.py
 
-class LoginPage:
-    def __init__(self, driver):
-        self.driver = driver
-        self.username_field = (By.ID, "user-name")
-        self.password_field = (By.ID, "password")
-        self.login_button = (By.ID, "login-button")
+from selenium.webdriver.common.by import By
+from pages.base_page import BasePage
+
+class LoginPage(BasePage):
+    USERNAME_INPUT = (By.ID, "user-name")
+    PASSWORD_INPUT = (By.ID, "password")
+    LOGIN_BUTTON = (By.ID, "login-button")
 
     def load(self):
-        self.driver.get("https://www.saucedemo.com/")
+        self.driver.get("https://www.saucedemo.com")
 
     def login(self, username, password):
-        self.driver.find_element(*self.username_field).send_keys(username)
-        self.driver.find_element(*self.password_field).send_keys(password)
-        self.driver.find_element(*self.login_button).click()
+        self.enter_text(self.USERNAME_INPUT, username)
+        self.enter_text(self.PASSWORD_INPUT, password)
+        self.click(self.LOGIN_BUTTON)

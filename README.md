@@ -20,6 +20,8 @@
 
 This project simulates real-world testing layers in a modular, DevOps-friendly structure — tailored for QA roles in data-heavy and enterprise environments.
 
+The UI tests follow the Page Object Model (POM) design pattern with reusable base classes and encapsulated flows.
+
 ---
 
 ## 📦 Tech Stack
@@ -63,4 +65,3 @@ pytest
 
 # View report (requires Allure CLI)
 allure serve reports/allure-results
-
