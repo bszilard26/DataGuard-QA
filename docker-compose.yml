@@ -5,3 +5,5 @@ services:
     volumes:
       - .:/app
     command: pytest
+    environment:
+      - CI=true

@@ -1,0 +1,58 @@
+# ========================================
+# 📦 PYTHON BUILD ARTIFACTS
+# ========================================
+__pycache__/
+*.py[cod]       # bytecode files
+*$py.class
+
+# ========================================
+# 🧪 TESTING & COVERAGE
+# ========================================
+.pytest_cache/           # pytest run cache
+.cache/                  # generic cache
+*.coverage               # coverage file
+coverage.xml
+htmlcov/                 # HTML coverage reports
+
+# ========================================
+# 📁 VIRTUAL ENVIRONMENTS
+# ========================================
+venv/                    # local virtualenv
+.env                     # env config (optional)
+.env.*                   # any other .env config
+
+# ========================================
+# ⚙️ EDITORS & IDEs
+# ========================================
+.vscode/                 # VS Code settings
+.idea/                   # JetBrains IDE settings
+
+# ========================================
+# 🐋 DOCKER
+# ========================================
+*.log                    # docker logs
+*.pid                    # process id files
+
+# ========================================
+# 🧾 REPORTING (ALLURE)
+# ========================================
+reports/allure-results/  # allure results dir
+reports/allure-report/   # allure generated html
+
+# ========================================
+# 🗃️ DATABASE FILES
+# ========================================
+*.db                     # SQLite DBs (ex: etl_sample.db)
+
+# ========================================
+# 🥚 PYTHON PACKAGING
+# ========================================
+*.egg-info/
+.eggs/
+
+# ========================================
+# 🧪 TEMPORARY / LOCAL TEST ARTIFACTS
+# ========================================
+*.tmp
+*.bak
+*.old
