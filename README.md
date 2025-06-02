@@ -9,18 +9,16 @@
 
 ## 🎯 Overview
 
-**DataGuard-QA** is an end-to-end test automation framework built in Python to demonstrate professional QA practices across:
+**DataGuard-QA** is an end-to-end test automation framework built in Python to demonstrate enterprise-level QA practices across:
 
-- ✅ UI automation (Selenium)
-- ✅ API testing (requests)
-- ✅ ETL/data validation (SQLite)
+- ✅ UI automation (Selenium + POM)
+- ✅ API testing (requests, Pytest)
+- ✅ ETL/data validation (SQLite-based pipelines)
 - ✅ Containerized execution (Docker)
 - ✅ Reporting (Allure)
 - ✅ CI/CD integration (GitHub Actions)
 
-This project simulates real-world testing layers in a modular, DevOps-friendly structure — tailored for QA roles in data-heavy and enterprise environments.
-
-The UI tests follow the Page Object Model (POM) design pattern with reusable base classes and encapsulated flows.
+This project simulates realistic, full-stack QA responsibilities in a modular and DevOps-aligned structure. It's designed for showcasing data-aware automation testing — combining reliability, reusability, and test observability.
 
 ---
 
@@ -30,7 +28,7 @@ The UI tests follow the Page Object Model (POM) design pattern with reusable bas
 |----------|------------------------------------------|
 | UI       | Selenium, WebDriverManager, Pytest       |
 | API      | requests, Pytest                         |
-| ETL/DB   | SQLite, SQLAlchemy (optional)            |
+| ETL/DB   | SQLite, Python (OOP-based validation)    |
 | CI/CD    | GitHub Actions, Docker, Docker Compose   |
 | Reports  | Allure, allure-pytest plugin             |
 
@@ -40,9 +38,22 @@ The UI tests follow the Page Object Model (POM) design pattern with reusable bas
 
 | Test Type | Description |
 |-----------|-------------|
-| **UI**    | Automates login flow using Selenium against [saucedemo.com](https://www.saucedemo.com) |
-| **API**   | Validates REST endpoints from [jsonplaceholder.typicode.com](https://jsonplaceholder.typicode.com) |
-| **ETL**   | Verifies data integrity post-transformation using SQLite queries |
+| **UI**    | Automates login flow using Selenium against [saucedemo.com](https://www.saucedemo.com), structured using Page Object Model |
+| **API**   | Verifies REST endpoints using `requests` library with assertions on status codes and response bodies |
+| **ETL**   | Validates data post-transformation with checks like row count comparison, null validation, data type enforcement, duplicate detection, and logical mapping (e.g., full name → first/last name split) |
+
+---
+
+## 🧠 ETL Validation Scenarios
+
+Implemented validations in `data_validator.py`:
+
+- 🔢 **Row Count Match** — Verifies staging vs. target counts
+- 🚫 **Null Check** — Ensures critical fields like `email` are populated
+- 🧬 **Uniqueness** — Ensures `id` column is de-duplicated
+- 🧠 **Business Logic** — Confirms correct parsing of `full_name` into `first_name`, `last_name`
+- 🧪 **Column Type Integrity** — Asserts expected types (e.g., `age: int`, `email: str`)
+- ♻️ **Reusable Class** — All validations abstracted via OOP utility `DataValidator` with connection lifecycle management
 
 ---
 
@@ -65,3 +76,7 @@ pytest
 
 # View report (requires Allure CLI)
 allure serve reports/allure-results
+
+# Build and run tests in container
+docker build -t dataguard-qa .
+docker run --rm dataguard-qa
