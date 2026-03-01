@@ -52,14 +52,14 @@ class DataValidator:
     def check_duplicates(self, table: str, column: str) -> ValidationResult:
         safe_table = self._ensure_safe_identifier(table)
         safe_column = self._ensure_safe_identifier(column)
-        rows = self.cursor.execute(  # noqa: S608
+        rows = self.cursor.execute(
             f"""
             SELECT {safe_column}, COUNT(*) as dupes
             FROM {safe_table}
             GROUP BY {safe_column}
             HAVING dupes > 1
             """
-        ).fetchall()
+        ).fetchall()  # noqa: S608
         return ValidationResult(passed=len(rows) == 0, details=rows)
 
     def check_fk_integrity(
@@ -69,14 +69,14 @@ class DataValidator:
         safe_fk = self._ensure_safe_identifier(fk_column)
         safe_ref_table = self._ensure_safe_identifier(ref_table)
         safe_ref_col = self._ensure_safe_identifier(ref_column)
-        rows = self.cursor.execute(  # noqa: S608
+        rows = self.cursor.execute(
             f"""
             SELECT t.{safe_fk}
             FROM {safe_table} t
             LEFT JOIN {safe_ref_table} r ON t.{safe_fk} = r.{safe_ref_col}
             WHERE r.{safe_ref_col} IS NULL
             """
-        ).fetchall()
+        ).fetchall()  # noqa: S608
         return ValidationResult(passed=len(rows) == 0, details=rows)
 
     def check_domain(self, table: str, column: str, allowed: Iterable[str]) -> ValidationResult:
