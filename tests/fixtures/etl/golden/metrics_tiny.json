@@ -1,0 +1,17 @@
+{
+  "target_row_count": 4,
+  "rejected_row_count": 6,
+  "status_counts": {
+    "active": 1,
+    "inactive": 1,
+    "pending": 2
+  },
+  "reject_reasons": {
+    "duplicate_email_newer_record_kept": 1,
+    "missing_email": 1,
+    "full_name_incomplete": 1,
+    "age_out_of_range": 1,
+    "invalid_email_format": 1,
+    "invalid_country_code": 1
+  }
+}

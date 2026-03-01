@@ -1,0 +1,11 @@
+full_name,email,age,status,country_code,updated_at
+John Doe,john.doe@example.com,34,active,US,2024-01-01T10:00:00Z
+Jane Smith,jane.smith@example.com,29,pending,CA,2024-01-03T09:00:00Z
+Alice Johnson,alice.johnson@example.com,45,inactive,GB,2024-01-02T11:30:00Z
+Bob NoEmail,,31,active,US,2024-01-02T14:00:00Z
+SingleName,single@example.com,22,active,US,2024-01-04T08:00:00Z
+Duplicate User,john.doe@example.com,36,active,US,2024-02-01T07:00:00Z
+Invalid Age,old.timer@example.com,130,active,US,2024-01-05T12:00:00Z
+Bad Email,bad-email-format,30,active,US,2024-01-06T15:00:00Z
+Unknown Country,wanderer@example.com,27,active,ZZ,2024-01-07T16:00:00Z
+Charlie Pending,charlie@example.com,18,pending,FR,2024-01-08T10:15:00Z

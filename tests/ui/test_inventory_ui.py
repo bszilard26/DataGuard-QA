@@ -2,13 +2,16 @@
 
 import os
 import time
+
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from pages.login_page import LoginPage
+
 from pages.inventory_page import InventoryPage
+from pages.login_page import LoginPage
+
 
 @pytest.mark.skipif("CI" in os.environ, reason="Skip UI test in Docker/CI")
 def test_inventory_page_load():

@@ -4,6 +4,7 @@ services:
     build: .
     volumes:
       - .:/app
-    command: pytest
+    command: ["pytest", "tests/etl/test_etl_data_validation.py"]
     environment:
       - CI=true
+      - PYTHONPATH=/app

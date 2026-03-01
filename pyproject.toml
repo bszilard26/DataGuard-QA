@@ -1,0 +1,18 @@
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "W", "UP", "S", "N"]
+ignore = ["S101"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["etl", "utils", "tests"]
+force-sort-within-sections = true
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]

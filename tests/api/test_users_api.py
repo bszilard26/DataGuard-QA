@@ -1,5 +1,6 @@
 from utils.api_services import UserService
 
+
 def test_list_users():
     service = UserService()
     response = service.list_users()

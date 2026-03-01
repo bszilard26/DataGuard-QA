@@ -3,3 +3,11 @@ requests
 pytest
 allure-pytest
 webdriver-manager
+pandas
+sqlalchemy
+psycopg2-binary
+testcontainers[postgres]
+great_expectations
+alembic
+black
+ruff

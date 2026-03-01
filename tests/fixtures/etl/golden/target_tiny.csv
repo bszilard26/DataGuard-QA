@@ -1,0 +1,5 @@
+email,first_name,last_name,age,status,country_code,updated_at,source_file
+john.doe@example.com,Duplicate,User,36,active,US,2024-02-01T07:00:00+00:00,tiny_batch
+jane.smith@example.com,Jane,Smith,29,pending,CA,2024-01-03T09:00:00+00:00,tiny_batch
+alice.johnson@example.com,Alice,Johnson,45,inactive,GB,2024-01-02T11:30:00+00:00,tiny_batch
+charlie@example.com,Charlie,Pending,18,pending,FR,2024-01-08T10:15:00+00:00,tiny_batch

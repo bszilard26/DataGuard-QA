@@ -1,4 +1,4 @@
-name: Run Pytest in Docker
+name: CI
 
 on:
   push:
@@ -7,24 +7,99 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
+  lint-test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        db: [sqlite]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v3
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-      - name: Build and run tests
+      - name: Install deps
         run: |
-          docker compose up --build --abort-on-container-exit
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint
+        run: |
+          PYTHONPATH=. ruff check .
+
+      - name: Format check
+        run: |
+          PYTHONPATH=. black --check .
+
+      - name: Tests (SQLite)
+        run: |
+          PYTHONPATH=. pytest tests/etl/test_etl_data_validation.py
+
+      - name: Great Expectations checkpoint
+        run: |
+          PYTHONPATH=. python scripts/run_etl.py tests/fixtures/etl/tiny/customers_tiny.csv /tmp/etl_gx_ci.db etl/schema_sqlite.sql tests/fixtures/etl/dim_countries.csv
+          PYTHONPATH=. python expectations/gx_tiny_checkpoint.py /tmp/etl_gx_ci.db
 
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results
+          name: allure-results-sqlite
+          path: reports/allure-results
+
+  pg:
+    runs-on: ubuntu-latest
+    needs: lint-test
+    if: github.event_name == 'push'
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: password
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Tests (Postgres profile)
+        env:
+          RUN_PG_ETL: "1"
+          PYTHONPATH: .
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: password
+          PGDATABASE: postgres
+        run: |
+          pytest tests/etl/test_etl_postgres.py
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-pg
           path: reports/allure-results
 
